@@ -8,6 +8,11 @@ const routes = [
     ]
   },
   {
+    path: '/base',
+    component: () => import('layouts/BaseLayout.vue'),
+    children: []
+  },
+  {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     meta: { auth: true },

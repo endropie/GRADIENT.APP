@@ -29,6 +29,7 @@ module.exports = function (/* ctx */) {
       'axios',
       'auth',
       'particle',
+      'realtime',
       'websocket'
     ],
 

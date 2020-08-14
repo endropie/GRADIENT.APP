@@ -25,7 +25,7 @@
       bordered
       content-class="bg-grey-1"
     >
-      <q-list>
+      <q-list  v-show="false">
         <q-item-label
           header
           class="text-grey-8"
@@ -38,6 +38,7 @@
           v-bind="link"
         />
       </q-list>
+      <direct-message :fit="true" />
     </q-drawer>
 
     <q-page-container>
@@ -48,12 +49,13 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
+import DirectMessage from '@/pages/direct-message'
 
 export default {
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink, DirectMessage
   },
 
   data () {
