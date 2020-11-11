@@ -1,7 +1,14 @@
 
 export default ({ app, Vue }) => {
   const instanceApp = {
-    env: process.env
+    env: process.env,
+    groupBy: (items, key) => {
+      const att = (v) => typeof key === 'function' ? key(v) : key
+      return items.reduce((result, item) => ({
+        ...result,
+        [att(item)]: [...(result[att(item)] || []), item]
+      }), {})
+    }
   }
 
   Vue.prototype.$app = instanceApp

@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
   paramsSerializer: params => {
     return qs.stringify(params, { arrayFormat: 'repeat' })
   },
-  baseURL: 'http://127.0.0.1:8000'
+  baseURL: `${document.location.protocol}//${document.location.hostname}:8000`
 })
 
 const setErrorInterceptor = (errorFunction) => {

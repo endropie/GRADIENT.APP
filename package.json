@@ -18,6 +18,8 @@
     "pusher-js": "^6.0.3",
     "quasar": "^1.0.0",
     "validator": "^12.1.0",
+    "vee-validate": "<3.0.0",
+    "vue-barcode-reader": "^0.0.3",
     "vue-i18n": "^8.0.0",
     "vue-particles": "^1.0.9"
   },
