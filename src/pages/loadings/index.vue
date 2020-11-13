@@ -21,9 +21,33 @@
         :pagination-label="(first, last, total, x) => `${TABLE.pagination.last ? TABLE.pagination.page + ' of ' + TABLE.pagination.last : ''}`"
         @request="TABLE.request"
       >
-      <q-td  slot="body-cell-prefix" slot-scope="rs" :props="rs" style="width:50px">
-        <q-btn flat dense color="blue-grey" icon="wysiwyg" @click="view(rs.row)" />
-      </q-td>
+        <template v-slot:item="{ row }">
+          <div class="q-pa-xs col-xs-12" :class="{'col-xs-6': $q.screen.gt.xs}">
+            <q-card flat bordered @click="view(row)" class="cursor-pointer">
+              <q-card-section horizontal class="q-pa-sm">
+                <div class="column">
+                  <label class="text-grey q-mb-sm">
+                    No. Reference
+                    <br><strong class="text-dark">{{ row.reference_number || '-' }}</strong>
+                  </label>
+                  <label class="text-grey q-mb-sm">
+                    Market Reference
+                    <br><strong class="text-dark">{{ row.reference }}</strong>
+                  </label>
+                </div>
+                <q-space />
+                <div class="column">
+                  <label class="text-grey-8">
+                    {{row.date}}
+                  </label>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+        <q-td  slot="body-cell-prefix" slot-scope="rs" :props="rs" style="width:50px">
+          <q-btn flat dense color="blue-grey" icon="wysiwyg" @click="view(rs.row)" />
+        </q-td>
       </q-table>
     </q-card>
   </q-page>
@@ -48,7 +72,7 @@ export default {
           { name: 'prefix' },
           { name: 'date', field: 'date', label: 'Date', align: 'left' },
           { name: 'reference_number', field: 'reference_number', label: 'No. Reference', align: 'left' },
-          { name: 'reference', field: 'reference', label: 'Reference', align: 'left' }
+          { name: 'reference', field: 'reference', label: 'Market', align: 'left' }
         ],
         pagination: {
           sortBy: 'date',
