@@ -1,5 +1,9 @@
 import UXSelect from '@/components/UXSelect'
 
+const config = {
+  brand_name: 'WH - GRADIENT'
+}
+
 export default ({ app, Vue }) => {
   const instanceFunction = {
     groupBy: (items, key) => {
@@ -13,6 +17,7 @@ export default ({ app, Vue }) => {
 
   const instanceApp = {
     env: process.env,
+    config,
     test: function () {
       console.warn('ini APP tester', this)
     }

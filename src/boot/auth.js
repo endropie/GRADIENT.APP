@@ -1,11 +1,16 @@
-function isArrayOrString (variable) {
+
+import auth from '@/store/auth'
+import enUS from '@/i18n/en-us/auth'
+
+const isArrayOrString = function (variable) {
   if (typeof variable === typeof [] || typeof variable === typeof '') {
     return true
   }
   return false
 }
-import auth from '@/store/auth'
-import enUS from '@/i18n/en-us/auth'
+const config = {
+  form_register: false
+}
 
 export default ({ app, router, store, Vue }) => {
   // Register auth store
@@ -78,7 +83,9 @@ export default ({ app, router, store, Vue }) => {
     })
   }
 
-  var helper = {}
+  var helper = {
+    config
+  }
   helper.register = (data) => { return store.dispatch('auth/register', data) }
   helper.login = async (data) => { return store.dispatch('auth/login', data) }
   helper.logout = () => { return store.dispatch('auth/logout') }
