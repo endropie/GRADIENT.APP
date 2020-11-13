@@ -21,6 +21,7 @@ export default {
           const setPage = (r) => {
             this.TABLE.pagination = {
               ...this.TABLE.pagination,
+              last: r.data.last_page,
               page: r.data.current_page,
               rowsPerPage: r.data.per_page,
               rowsNumber: r.data.total

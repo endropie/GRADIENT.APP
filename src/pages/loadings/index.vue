@@ -1,23 +1,24 @@
 <template>
   <q-page padding class="flex flex-center">
-
-    <q-card class="column" style="width: 100%;min-height: calc(100vh - 100px)">
-      <q-card-section class="row q-pa-sm" >
-        <div class="text-no-wrap ellipsis">
-          <div class="text-subtitle2">LIST - BARANG KELUAR</div>
-        </div>
-        <q-space />
-        <div>
-          <q-btn dense glossy round color="blue-grey" icon="add" @click="form()" />
-        </div>
-      </q-card-section>
+    <q-card style="width: 100%;min-height: calc(100vh - 100px)">
+      <q-bar class="bg-blue-grey text-white text-subtitle2" style="height:50px">
+        <q-icon name="mdi-archive-arrow-up-outline" size="20px" />
+        <q-toolbar-title class="text-subtitle1">
+          LIST - BARANG KELUAR
+        </q-toolbar-title>
+        <q-btn round dense outline icon="add" @click="form()" />
+        <q-btn flat round dense icon="more_vert" />
+      </q-bar>
       <q-table
-        style="height: calc(100vh - 150px)"
-        :grid="$q.screen.lt.sm"
+        style="height: calc(100vh - 140px)"
+        :grid="$q.screen.lt.sm" card-container-style="overflow-y:scroll"
+        :flat="$q.screen.lt.sm" :bordered="$q.screen.lt.sm"
         :data="TABLE.rs"
         :columns="TABLE.columns"
         :pagination.sync="TABLE.pagination"
         :rows-per-page-options="TABLE.rowPageOptions"
+        rows-per-page-label="LIMIT"
+        :pagination-label="(first, last, total, x) => `${TABLE.pagination.last ? TABLE.pagination.page + ' of ' + TABLE.pagination.last : ''}`"
         @request="TABLE.request"
       >
       <q-td  slot="body-cell-prefix" slot-scope="rs" :props="rs" style="width:50px">
