@@ -74,27 +74,12 @@ export default {
     form (row = null) {
       this.$q.dialog({
         component: FormComponent,
-
-        // optional if you want to have access to
-        // Router, Vuex store, and so on, in your
-        // custom component:
-        parent: this, // becomes child of this Vue node
-        // ("this" points to your Vue component)
-        // (prop was called "root" in < 1.1.0 and
-        // still works, but recommending to switch
-        // to the more appropriate "parent" name)
-
-        // props forwarded to component
-        // (everything except "component" and "parent" props above):
+        parent: this,
         mode: 'create',
         id: null
         // ...more.props...
       }).onOk(() => {
         this.load()
-      }).onCancel(() => {
-        console.log('DIALOG Cancel')
-      }).onDismiss(() => {
-        console.log('DIALOG Dismiss')
       })
     },
     view (row) {
@@ -106,10 +91,6 @@ export default {
         // ...more.props...
       }).onOk(() => {
         this.load()
-      }).onCancel(() => {
-        console.log('Cancel')
-      }).onDismiss(() => {
-        console.log('Called on OK or Cancel')
       })
     }
   }
