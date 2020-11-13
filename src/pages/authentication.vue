@@ -8,7 +8,7 @@
             'text-secondary': tab === 'register'
           }"
         >
-          <q-icon name="widgets" class="text-h1" />
+          <q-icon :name="$app.config.brand_icon" class="text-h1" />
           <div>
             <span class="text-h6"> {{$app.config.brand_name}} </span>
             <span class="text-caption text-" >V.1</span>

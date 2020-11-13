@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="lHh Lpr lFf" class="bg-blue-grey-1">
+    <q-header elevated class="bg-blue-grey-2 text-blue-grey">
       <q-toolbar>
         <q-btn
           flat
@@ -27,18 +27,27 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-grey-3 text-blue-grey"
     >
       <q-list >
         <q-item-label
           header
-          class="text-grey-8"
+          class="text-grey-8 text-right"
         >
-          Essential Links
+        <span class="text-subtitle2 q-pa-md">{{$app.config.brand_name}}</span>
+        <q-icon :name="$app.config.brand_icon" size="18px" />
         </q-item-label>
+        <q-item clickable to="/admin/dashboard">
+          <q-item-section top avatar>
+            <q-avatar square icon="widgets" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>DASBORD</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item clickable to="/admin/receives">
           <q-item-section top avatar>
-            <q-avatar color="primary" text-color="white" icon="mdi-widgets-outline" />
+            <q-avatar icon="mdi-widgets-outline" />
           </q-item-section>
           <q-item-section>
             <q-item-label>PENERIMAAN BARANG</q-item-label>
@@ -47,7 +56,7 @@
         </q-item>
         <q-item clickable to="/admin/loadings">
           <q-item-section top avatar>
-            <q-avatar color="primary" text-color="white" icon="mdi-archive-arrow-up-outline" />
+            <q-avatar icon="mdi-archive-arrow-up-outline" />
           </q-item-section>
           <q-item-section>
             <q-item-label>PENGELUARAN BARANG</q-item-label>

@@ -6,6 +6,7 @@
       style="opacity:0.6"
       v-if="$route.path !== '/authentication'">
       <q-toolbar>
+        <q-icon :name="$app.config.brand_icon" size="sm" />
         <q-toolbar-title class="text-weight-bold text-white">
           {{$app.config.brand_name}}
         </q-toolbar-title>
@@ -27,9 +28,6 @@ export default {
   name: 'MainLayout',
   data () {
     return {}
-  },
-  created () {
-    console.warn('MainLayout Created!', this.$app.env)
   }
 }
 </script>

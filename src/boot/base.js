@@ -3,7 +3,8 @@ import moment from 'moment'
 moment.locale('id')
 
 const config = {
-  brand_name: 'WH - GRADIENT'
+  brand_name: 'WH - GRADIENT',
+  brand_icon: 'control_camera'
 }
 
 export default ({ app, Vue }) => {

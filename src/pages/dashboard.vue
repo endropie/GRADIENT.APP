@@ -1,8 +1,9 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-banner class="bg-primary text-white">
-      DASHBOARD
-    </q-banner>
+  <q-page class="flex flex-center  bg-blue-grey-2">
+    <img width="240px" class="q-pa-md"
+      alt="Quasar logo"
+      src="~assets/gradient-brand.png"
+    >
   </q-page>
 </template>
 
