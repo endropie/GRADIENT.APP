@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="flex justify-center">
     <div class="q-mt-md" :style="`min-height: calc(100vh - 100px);width:${$q.screen.lt.sm ? '18' : '22'}rem`">
-      <q-card class="q-mb-xl">
+      <q-card class="q-my-xl">
         <q-card-section class="bg-blue-grey-2 text-center"
           :class="{
             'text-indigo': tab === 'login',
