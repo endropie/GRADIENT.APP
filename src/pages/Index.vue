@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img width="480px"
+    <img width="240px"
       alt="Quasar logo"
       src="~assets/gradient-brand.png"
     >

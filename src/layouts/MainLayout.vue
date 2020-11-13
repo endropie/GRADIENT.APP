@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <vue-particles color="#dedede" class="bg-blue-grey-10 fixed fit"></vue-particles>
+    <vue-particles color="#dedede" class="bg-blue-grey-10 fixed fit" />
     <q-header elevated
       class="bg-transparent bg-blue-grey-10 text-white"
       style="opacity:0.6"
