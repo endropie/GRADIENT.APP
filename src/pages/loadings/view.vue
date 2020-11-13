@@ -1,5 +1,5 @@
 <template>
-  <q-dialog ref="dialog" persistent maximized>
+  <q-dialog :ref="RECORD.dialog" persistent maximized>
     <q-card style="min-height: calc(100vh - 100px)" v-if="rsView">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
         <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
@@ -73,6 +73,7 @@ export default {
     return {
       rsView: null,
       RECORD: {
+        dialog: 'dialog',
         api: '/api/loadings',
         params: {
           fields: 'date,reference,reference.number',
@@ -87,12 +88,6 @@ export default {
     this.init()
   },
   methods: {
-    show () {
-      this.$refs.dialog.show()
-    },
-    hide () {
-      this.$refs.dialog.hide()
-    },
     init () {
       this.RECORD.load(v => {
         this.rsView = v

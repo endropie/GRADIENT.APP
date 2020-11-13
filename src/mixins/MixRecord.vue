@@ -9,6 +9,7 @@ export default {
   data () {
     return {
       RECORD: {
+        dialog: null,
         api: null,
         params: {
           fields: '*'
@@ -50,6 +51,14 @@ export default {
           }
         }
       }
+    }
+  },
+  methods: {
+    show () {
+      if (this.RECORD.dialog) this.$refs[this.RECORD.dialog].show()
+    },
+    hide () {
+      if (this.RECORD.dialog) this.$refs[this.RECORD.dialog].hide()
     }
   }
 }

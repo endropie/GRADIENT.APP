@@ -1,5 +1,5 @@
 <template>
-  <q-dialog ref="dialog" persistent maximized>
+  <q-dialog :ref="RECORD.dialog" persistent maximized>
     <q-card style="min-height: calc(100vh - 100px)" v-if="rsForm">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
         <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
@@ -197,6 +197,7 @@ export default {
     return {
       rsForm: null,
       RECORD: {
+        dialog: 'dialog',
         api: '/api/loadings',
         setForm: (v = {}) => ({
           reference_number: null,
@@ -230,12 +231,6 @@ export default {
     }
   },
   methods: {
-    show () {
-      this.$refs.dialog.show()
-    },
-    hide () {
-      this.$refs.dialog.hide()
-    },
     init () {
       this.rsForm = this.RECORD.setForm()
     },
