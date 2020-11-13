@@ -78,7 +78,7 @@
             <q-card-actions vertical>
               <q-input ref="code" type="text" class="full-width"
                 filled dense bottom-slots
-                value="" @keyup.enter="enterCode"
+                value="" @keydown.enter="enterCode"
               >
                 <q-chip :slot="$q.screen.lt.sm ? 'hint' : 'prepend'" v-if="as_item"
                   :class="{'full-width': $q.screen.lt.sm}"
@@ -88,10 +88,11 @@
                   :label="as_item.name"
                   removable @remove="[as_item = null, $refs.code.focus()]"
                 />
-                <q-btn slot="after" glossy color="blue-grey" icon="qr_code" @click="scaningCode" />
-                <q-btn slot="prepend" dense flat color="blue-grey" icon="widgets" v-if="!as_item">
-                  <q-popup-edit v-model="as_item" auto-save>
-                    <ux-select dense outlined autofocus hide-bottom-space no-error-icon
+                <q-btn slot="after" glossy dense size="18px" color="blue-grey" icon="qr_code" @click="scaningCode" />
+                <q-btn slot="prepend" flat color="blue-grey" icon="widgets" v-if="!as_item">
+                  <q-popup-edit v-model="as_item" auto-save  :cover="false" :offset="[0, 10]">
+                    <ux-select dense outlined autofocus hide-bottom-space no-error-icon bottom-slots
+                      label="CARI BARANG"
                       style="width:250px"
                       v-model="as_item"
                       filter source="/api/items?mode=all&limit=20" :source-keys="['name']"
@@ -99,7 +100,10 @@
                       option-value="id"
                       option-label="name"
                       @input="() =>$refs.code.focus()"
-                    />
+                    >
+                      <q-icon slot="prepend" name="widgets" />
+                      <div slot="counter"> <q-icon name="search" /> Input barang akan diregister</div>
+                    </ux-select>
                   </q-popup-edit>
                 </q-btn>
               </q-input>
@@ -165,10 +169,11 @@
                       :label="as_item.name"
                       removable @remove="[as_item = null, $refs.code.focus()]"
                     />
-                    <q-btn slot="after" glossy dense color="blue-grey" icon="qr_code" @click="scaningCode" />
+                    <q-btn slot="after" glossy dense size="18px" color="blue-grey" icon="qr_code" @click="scaningCode" />
                     <q-btn slot="prepend" dense flat color="blue-grey" icon="widgets" v-if="!as_item">
-                      <q-popup-edit v-model="as_item" auto-save>
+                      <q-popup-edit v-model="as_item" auto-save :cover="false" :offset="[0, 10]">
                         <ux-select dense outlined autofocus hide-bottom-space no-error-icon
+                          label="CARI BARANG"
                           style="width:250px"
                           v-model="as_item"
                           filter source="/api/items?mode=all&limit=20" :source-keys="['name']"
@@ -176,7 +181,11 @@
                           option-value="id"
                           option-label="name"
                           @input="$refs.code.focus()"
-                        />
+                          bottom-slots
+                        >
+                          <q-icon slot="prepend" name="widgets" />
+                          <div slot="counter"> <q-icon name="search" /> Input barang akan diregister</div>
+                        </ux-select>
                       </q-popup-edit>
                     </q-btn>
                   </q-input>
