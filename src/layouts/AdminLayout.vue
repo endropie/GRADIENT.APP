@@ -15,7 +15,11 @@
           ADMINISTRATION
         </q-toolbar-title>
 
-        <q-btn dense flat icon-right="exit_to_app" @click="logout" />
+        <q-btn dense flat icon-right="exit_to_app" @click="logout" >
+          <q-tooltip>
+            LOGOUT
+          </q-tooltip>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -25,20 +29,37 @@
       bordered
       content-class="bg-grey-1"
     >
-      <q-list  v-show="false">
+      <q-list >
         <q-item-label
           header
           class="text-grey-8"
         >
           Essential Links
         </q-item-label>
-        <EssentialLink
+        <q-item clickable to="/admin/receives">
+          <q-item-section top avatar>
+            <q-avatar color="primary" text-color="white" icon="mdi-widgets-outline" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>PENERIMAAN BARANG</q-item-label>
+            <q-item-label caption lines="2">Register of receives.</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable to="/admin/loadings">
+          <q-item-section top avatar>
+            <q-avatar color="primary" text-color="white" icon="mdi-archive-arrow-up-outline" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>PENGELUARAN BARANG</q-item-label>
+            <q-item-label caption lines="2">Checkout of Delivery.</q-item-label>
+          </q-item-section>
+        </q-item>
+        <EssentialLink v-show="false"
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
         />
       </q-list>
-      <direct-message :fit="true" />
     </q-drawer>
 
     <q-page-container>
@@ -49,13 +70,12 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
-import DirectMessage from '@/pages/direct-message'
 
 export default {
   name: 'MainLayout',
 
   components: {
-    EssentialLink, DirectMessage
+    EssentialLink
   },
 
   data () {

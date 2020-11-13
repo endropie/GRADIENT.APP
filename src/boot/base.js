@@ -1,7 +1,7 @@
+import UXSelect from '@/components/UXSelect'
 
 export default ({ app, Vue }) => {
-  const instanceApp = {
-    env: process.env,
+  const instanceFunction = {
     groupBy: (items, key) => {
       const att = (v) => typeof key === 'function' ? key(v) : key
       return items.reduce((result, item) => ({
@@ -11,10 +11,15 @@ export default ({ app, Vue }) => {
     }
   }
 
-  Vue.prototype.$app = instanceApp
-
-  // console.warn('APP', app)
-  app.tester = function () {
-    console.warn('ini APP tester', this)
+  const instanceApp = {
+    env: process.env,
+    test: function () {
+      console.warn('ini APP tester', this)
+    }
   }
+
+  Vue.prototype.$app = instanceApp
+  Vue.prototype.$function = instanceFunction
+
+  Vue.component('ux-select', UXSelect)
 }
