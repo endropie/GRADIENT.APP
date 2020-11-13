@@ -6,11 +6,14 @@
       style="opacity:0.6"
       v-if="$route.path !== '/authentication'">
       <q-toolbar>
-        <q-toolbar-title>
-          REALTIME
+        <q-toolbar-title class="text-weight-bold text-white">
+          {{$app.config.brand_name}}
         </q-toolbar-title>
-
-        <q-btn class="q-ma-md fixed-bottom-right" color="blue-grey" icon-right="mdi-transfer-right" label="Administrator" to="/admin" />
+        <q-btn label="Administrator" to="/admin"
+          color="blue-grey"
+          icon-right="mdi-transfer-right"
+          class="fixed-bottom-right" :class="($q.screen.lt.sm ? 'q-ma-sm' : 'q-ma-md')"
+        />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -24,6 +27,9 @@ export default {
   name: 'MainLayout',
   data () {
     return {}
+  },
+  created () {
+    console.warn('MainLayout Created!', this.$app.env)
   }
 }
 </script>

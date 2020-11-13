@@ -1,23 +1,28 @@
 <template>
   <q-page padding class="flex justify-center">
-    <div class="q-mt-md" :style="`width:${$q.screen.lt.sm ? '18' : '22'}rem`">
-      <q-card>
-        <q-card-section class="bg-indigo-5 text-white text-center">
+    <div class="q-mt-md" :style="`min-height: calc(100vh - 100px);width:${$q.screen.lt.sm ? '18' : '22'}rem`">
+      <q-card class="q-mb-xl">
+        <q-card-section class="bg-blue-grey-2 text-center"
+          :class="{
+            'text-indigo': tab === 'login',
+            'text-secondary': tab === 'register'
+          }"
+        >
           <q-icon name="widgets" class="text-h1" />
           <div>
-            <span class="text-h6"> REALTIME </span>
+            <span class="text-h6"> {{$app.config.brand_name}} </span>
             <span class="text-caption text-" >V.1</span>
           </div>
         </q-card-section>
         <q-tabs
           v-model="tab"
           align="justify"
-          narrow-indicator
           active-color="white"
-          :active-bg-color="tab === 'register' ? 'secondary' : 'blue-grey-4'"
+          :active-bg-color="tab === 'register' ? 'secondary' : 'indigo'"
         >
-          <q-tab class="text-primary" name="login" label="Login" />
-          <q-tab name="register" label="Register" />
+
+          <q-tab name="login" label="Login" />
+          <q-tab name="register" label="Register" v-if="$auth.config.form_register" />
           <!-- <q-tab class="text-teal" name="forgot" label="Forgot" /> -->
         </q-tabs>
         <q-separator />
@@ -27,19 +32,28 @@
               <auth-login flat class="fit" @done="logged" @tab="v => tab = v" />
             </q-tab-panel>
 
-            <q-tab-panel name="register">
+            <q-tab-panel name="register" v-if="$auth.config.form_register">
               <auth-register flat class="fit" @done="registered" />
             </q-tab-panel>
 
-            <q-tab-panel name="forgot">
-              <div class="text-h6">Forgot Password</div>
-              Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
+            <q-tab-panel name="forgot" class=" text-center">
+              <div class="text-h6 text-uppercase">Forgot Password</div>
+              <div class="clolumn text-grey">
+                <q-icon name="warning" size="120px" />
+                <div class="q-mb-lg">
+                  Sory, Forgot password is undercontraction!
+                </div>
+              </div>
             </q-tab-panel>
           </q-tab-panels>
         </q-card-section>
       </q-card>
     </div>
-  <q-btn class="q-ma-md fixed-bottom-left" color="blue-grey" icon="mdi-transfer-left" label="Landing" to="/" />
+    <q-btn to="/" label="Landing"
+      color="blue-grey" icon="mdi-transfer-left"
+      class="absolute-bottom-left "
+      :class="($q.screen.lt.sm ? 'q-ma-sm' : 'q-ma-md')"
+    />
   </q-page>
 </template>
 
