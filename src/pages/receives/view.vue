@@ -11,8 +11,8 @@
           <div class="row q-mb-md">
             <div class="text-h6">Reference: {{rsView.reference}}</div>
             <q-space />
-            <div>
-              {{rsView.date}}
+            <div v-if="rsView.date">
+              {{$app.moment(rsView.date).format('ll')}}
             </div>
           </div>
           <div class="column q-gutter-sm" v-if="$q.screen.lt.sm">

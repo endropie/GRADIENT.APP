@@ -35,8 +35,8 @@
                 </div>
                 <q-space />
                 <div class="column">
-                  <label class="text-grey-8">
-                    {{row.date}}
+                  <label class="text-grey-8" v-if="row.date">
+                    {{$app.moment(row.date).format('ll')}}
                   </label>
                 </div>
               </q-card-section>
@@ -51,7 +51,6 @@
 
   </q-page>
 </template>
-
 <script>
 import MixTable from '@/mixins/MixTable'
 import ViewComponent from './view'
@@ -70,7 +69,7 @@ export default {
         rs: [],
         columns: [
           { name: 'prefix' },
-          { name: 'date', field: 'date', label: 'Date', align: 'left' },
+          { name: 'date', field: 'date', format: (v) => (v ? this.$app.moment(v).format('L') : '-'), label: 'Date', align: 'left' },
           { name: 'reference', field: 'reference', label: 'Reference', align: 'left' }
         ],
         pagination: {

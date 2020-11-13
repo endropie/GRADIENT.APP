@@ -37,8 +37,8 @@
                 </div>
                 <q-space />
                 <div class="column">
-                  <label class="text-grey-8">
-                    {{row.date}}
+                  <label class="text-grey-8" v-if="row.date">
+                    {{$app.moment(row.date).format('ll')}}
                   </label>
                 </div>
               </q-card-section>
@@ -70,7 +70,7 @@ export default {
         rs: [],
         columns: [
           { name: 'prefix' },
-          { name: 'date', field: 'date', label: 'Date', align: 'left' },
+          { name: 'date', field: 'date', format: (v) => (v ? this.$app.moment(v).format('L') : '-'), label: 'Date', align: 'left' },
           { name: 'reference_number', field: 'reference_number', label: 'No. Reference', align: 'left' },
           { name: 'reference', field: 'reference', label: 'Market', align: 'left' }
         ],

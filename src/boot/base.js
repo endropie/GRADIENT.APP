@@ -1,4 +1,6 @@
 import UXSelect from '@/components/UXSelect'
+import moment from 'moment'
+moment.locale('id')
 
 const config = {
   brand_name: 'WH - GRADIENT'
@@ -18,6 +20,7 @@ export default ({ app, Vue }) => {
   const instanceApp = {
     env: process.env,
     config,
+    moment,
     test: function () {
       console.warn('ini APP tester', this)
     }
