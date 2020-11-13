@@ -3,22 +3,28 @@
     <q-form @submit="onSubmit" class="column" >
       <q-card-section class="q-col-gutter-lg no-padding" >
           <q-input dense type="email"
-            id="email"
+            id="email" name="body.email"
             color="indigo"
             v-model.trim="data.body.email"
             :label="this.$t('auth.login.email')"
-            :rules="validations['email']"
-            lazy-rules
             autofocus
+            v-validate="'required'"
+            :error="errors.has('body.email')"
+            :error-message="errors.first('body.email')"
           />
+            <!-- lazy-rules -->
+            <!-- :rules="validations['email']" -->
           <q-input dense type="password"
-            id="password"
+            id="password" name="body.password"
+            :label="this.$t('auth.login.password')"
             color="indigo"
             v-model="data.body.password"
-            :label="this.$t('auth.login.password')"
-            :rules="validations['password']"
-            lazy-rules
+            v-validate="'required'"
+            :error="errors.has('body.password')"
+            :error-message="errors.first('body.password')"
           />
+            <!-- :rules="validations['password']" -->
+            <!-- lazy-rules -->
           <div class="row justify-between no-wrap q-my-sm">
             <q-checkbox id="rememberMe" color="indigo" v-model="data.rememberMe" :label="this.$t('auth.login.remember_me')" />
             <q-space />
@@ -78,19 +84,25 @@ export default {
       // }
     },
     onSubmit () {
-      this.$q.loading.show()
-      this.$auth
-        .login(this.data)
-        .then(() => {
-          this.$emit('done')
-        })
-        .catch(error => {
-          this.FORM.response.validate(error)
-          this.FORM.response.error(error, this.$tc('auth.login.failed'))
-        })
-        .finally(() => {
-          this.$q.loading.hide()
-        })
+      const submit = () => {
+        this.$q.loading.show()
+        this.$auth
+          .login(this.data)
+          .then(() => {
+            this.$emit('done')
+          })
+          .catch(error => {
+            this.RECORD.setErrorResponse(error.response || error)
+          })
+          .finally(() => {
+            this.$q.loading.hide()
+          })
+      }
+
+      this.$validator.validate().then(valid => {
+        if (!valid) return false
+        submit()
+      })
     }
   }
 }
