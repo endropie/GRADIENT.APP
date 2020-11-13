@@ -1,10 +1,10 @@
 <template>
   <q-card v-bind="$attrs" >
-    <!-- <div class="text-h6 text-uppercase text-primary">{{$t('auth.login.title')}}</div> -->
-    <q-form @submit="onSubmit" class="column " >
+    <q-form @submit="onSubmit" class="column" >
       <q-card-section class="q-col-gutter-lg no-padding" >
           <q-input dense type="email"
             id="email"
+            color="indigo"
             v-model.trim="data.body.email"
             :label="this.$t('auth.login.email')"
             :rules="validations['email']"
@@ -13,13 +13,14 @@
           />
           <q-input dense type="password"
             id="password"
+            color="indigo"
             v-model="data.body.password"
             :label="this.$t('auth.login.password')"
             :rules="validations['password']"
             lazy-rules
           />
           <div class="row justify-between no-wrap q-my-sm">
-            <q-checkbox id="rememberMe" v-model="data.rememberMe" :label="this.$t('auth.login.remember_me')" />
+            <q-checkbox id="rememberMe" color="indigo" v-model="data.rememberMe" :label="this.$t('auth.login.remember_me')" />
             <q-space />
             <span>
               <q-btn dense flat no-caps size="sm" tabindex="100"
@@ -30,7 +31,7 @@
       </q-card-section>
 
       <q-card-actions class="no-padding">
-        <q-btn type="submit" class="full-width" :label="$t('auth.login.login')" color="primary" />
+        <q-btn type="submit" class="full-width" color="indigo" :label="$t('auth.login.login')" />
       </q-card-actions>
     </q-form>
   </q-card>

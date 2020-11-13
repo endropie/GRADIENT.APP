@@ -3,28 +3,29 @@
     <!-- <div class="text-h6 text-uppercase text-primary">{{$t('auth.register.register')}}</div> -->
     <q-form class="q-gutter-md" @submit="onSubmit">
       <q-card-section class="no-padding">
-        <q-input dense
-          v-model.trim="data.name"
+        <q-input dense autofocus autocomplete="false"
+          color="secondary"
           type="text"
+          v-model.trim="data.name"
           :label="$t('auth.labels.name')"
           :rules="validations['name']"
           lazy-rules
         />
         <q-input dense
           id="email"
-          v-model.trim="data.email"
           type="email"
+          color="secondary"
+          v-model.trim="data.email"
           :label="$t('auth.labels.email')"
-          bottom-slots
-          autofocus
           :rules="validations['email']"
           lazy-rules
         />
         <div class="row q-col-gutter-sm">
           <q-input dense class="col"
             id="password"
-            v-model="data.password"
+            color="secondary"
             :type="showPassword.password ? 'text' : 'password'"
+            v-model="data.password"
             :label="$t('auth.labels.password')"
             bottom-slots no-error-icon
             :rules="validations['password']"
@@ -40,6 +41,7 @@
           </q-input>
           <q-input dense class="col"
             id="repeatPassword"
+            color="secondary"
             v-model="data.password_confirmation"
             :type="showPassword.repeatPassword ? 'text' : 'password'"
             :label="$t('auth.labels.repeat_password')"
@@ -60,7 +62,7 @@
       <q-card-actions class="no-padding">
         <q-btn class="full-width"
           :label="$t('auth.register.register')"
-          color="primary"
+          color="secondary"
           type="submit"
         />
       </q-card-actions>
