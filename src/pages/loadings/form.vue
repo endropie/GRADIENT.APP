@@ -3,7 +3,7 @@
     <q-card style="min-height: calc(100vh - 100px)" v-if="rsForm">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
         <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
-        <q-toolbar-title>FORM BARANG KELUAR</q-toolbar-title>
+        <q-toolbar-title>RECORD BARANG KELUAR</q-toolbar-title>
         <!-- <q-space /> -->
       </q-bar>
       <q-scroll-area style="height: calc(100vh - 100px); width:100%"  :class="{'q-px-sm': $q.screen.gt.sm}">
@@ -188,19 +188,15 @@
 </template>
 
 <script>
+import MixRecord from '@/mixins/MixRecord'
 import CodeScanner from '@/components/CodeScanner'
 export default {
   name: 'ReceiveForm',
-  props: {
-    mode: { type: String, default: 'create' },
-    id: Number
-  },
+  mixins: [MixRecord],
   data () {
     return {
       rsForm: null,
-      as_last_item: false,
-      SHEET: {},
-      FORM: {
+      RECORD: {
         api: '/api/loadings',
         setForm: (v = {}) => ({
           reference_number: null,
@@ -241,7 +237,7 @@ export default {
       this.$refs.dialog.hide()
     },
     init () {
-      this.rsForm = this.FORM.setForm()
+      this.rsForm = this.RECORD.setForm()
     },
     loadSerial (v, index = null) {
       if (index !== null) this.rsForm.loading_items[index].__serial_loading = true
@@ -276,7 +272,7 @@ export default {
       if (this.rsForm.loading_items.find(x => x.serial === v)) {
         this.$q.notify({ type: 'negative', message: 'Serial has been added.' })
       } else {
-        this.rsForm.loading_items.push(this.FORM.setFormItem({ serial: v, item: null }))
+        this.rsForm.loading_items.push(this.RECORD.setFormItem({ serial: v, item: null }))
         this.loadSerial(v, this.rsForm.loading_items.length - 1)
       }
     },
@@ -299,7 +295,7 @@ export default {
     save () {
       const submit = () => {
         this.$q.loading.show()
-        this.$axios.post(this.FORM.api, this.rsForm)
+        this.$axios.post(this.RECORD.api, this.rsForm)
           .then((response) => {
             const message = `LOADING ${response.data.reference} CREATED!`
             this.$q.notify({ type: 'positive', message })
@@ -307,7 +303,7 @@ export default {
             this.hide()
           })
           .catch((error) => {
-            this.fieldError(error.response || null)
+            this.RECORD.setErrorResponse(error.response || error)
             let message = { code: 0, text: 'SAVE INVALID' }
 
             if (error.response) {
@@ -322,6 +318,7 @@ export default {
       }
 
       this.$validator.validate().then(valid => {
+        if (!valid) return this.$q.notify({ type: 'negative', message: 'SUBMIT FAILED' })
         const len = this.rsForm.loading_items.length
         const desc = Object
           .values(this.$function.groupBy(this.rsForm.loading_items, row => row.item.id))
@@ -340,22 +337,6 @@ export default {
           submit()
         })
       })
-    },
-    fieldError ({ ...ErrRes }, form = null) {
-      if (ErrRes.status && ErrRes.status === 422) {
-        if (this.$validator && ErrRes.data && ErrRes.data.errors) {
-          this.$validator.errors.clear()
-          const ErrorFields = ErrRes.data.errors
-          const scope = form ? { scope: form } : {}
-
-          for (const field in ErrorFields) {
-            if (field) {
-              const basefield = Object.assign({ field: field, msg: ErrorFields[field][0] }, scope)
-              this.$validator.errors.add(basefield)
-            }
-          }
-        }
-      }
     }
   }
 }

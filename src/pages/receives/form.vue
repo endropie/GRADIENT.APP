@@ -251,9 +251,7 @@ export default {
       this.$refs.dialog.hide()
     },
     init () {
-      this.RECORD.load(v => {
-        this.rsForm = v
-      })
+      this.rsForm = this.RECORD.setForm()
     },
     scaningCode () {
       this.$q.dialog({
@@ -318,6 +316,8 @@ export default {
       }
 
       this.$validator.validate().then(valid => {
+        if (!valid) return this.$q.notify({ type: 'negative', message: 'SUBMIT FAILED' })
+
         const len = this.rsForm.receive_items.length
         const desc = Object
           .values(this.$function.groupBy(this.rsForm.receive_items, row => row.item.id))

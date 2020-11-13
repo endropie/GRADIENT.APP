@@ -13,7 +13,6 @@ export default {
         params: {
           fields: '*'
         },
-        setForm: (v = {}) => ({}),
         load: (resolve, reject = null) => {
           if (this.mode === 'create') return resolve(this.RECORD.setForm())
           if (this.mode === 'update' || this.mode === 'read') {
@@ -31,6 +30,23 @@ export default {
               .finally(() => {
                 this.$q.loading.hide()
               })
+          }
+        },
+        setForm: (v = {}) => ({}),
+        setErrorResponse ({ ...ErrRes }, form = null) {
+          if (ErrRes.status && ErrRes.status === 422) {
+            if (this.$validator && ErrRes.data && ErrRes.data.errors) {
+              this.$validator.errors.clear()
+              const ErrorFields = ErrRes.data.errors
+              const scope = form ? { scope: form } : {}
+
+              for (const field in ErrorFields) {
+                if (field) {
+                  const basefield = Object.assign({ field: field, msg: ErrorFields[field][0] }, scope)
+                  this.$validator.errors.add(basefield)
+                }
+              }
+            }
           }
         }
       }

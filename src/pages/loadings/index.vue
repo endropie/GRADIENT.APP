@@ -75,7 +75,7 @@ export default {
         mode: 'create',
         id: null
       }).onOk(() => {
-        this.load()
+        this.init()
       })
     },
     view (row) {
@@ -86,7 +86,7 @@ export default {
         id: row.id
         // ...more.props...
       }).onOk(() => {
-        this.load()
+        this.init()
       })
     }
   }
