@@ -6,7 +6,7 @@
         <q-toolbar-title>FORM PENERIMAAN BARANG</q-toolbar-title>
         <!-- <q-space /> -->
       </q-bar>
-      <q-scroll-area style="height: calc(100vh - 100px); width:100%"  :class="{'q-px-sm': $q.screen.gt.sm}">
+      <q-scroll-area :style="`height: calc(${FullHeight} - 100px); width:100%`"  :class="{'q-px-sm': $q.screen.gt.sm}">
         <q-card-section>
           <q-card flat bordered class="q-mb-sm">
             <q-card-section :horizontal="!$q.screen.lt.sm" :class="{'q-px-md q-gutter-sm': !$q.screen.lt.sm}">
@@ -243,6 +243,11 @@ export default {
   },
   created () {
     this.init()
+  },
+  computed: {
+    FullHeight () {
+      return window.innerHeight + 'px'
+    }
   },
   methods: {
     init () {

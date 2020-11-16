@@ -1,12 +1,12 @@
 <template>
   <q-dialog :ref="RECORD.dialog" persistent maximized>
-    <q-card style="min-height: calc(100vh - 100px)" v-if="rsForm">
+    <q-card v-if="rsForm" style="min-width:250px">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
         <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
         <q-toolbar-title>RECORD BARANG KELUAR</q-toolbar-title>
         <!-- <q-space /> -->
       </q-bar>
-      <q-scroll-area style="height: calc(100vh - 100px); width:100%"  :class="{'q-px-sm': $q.screen.gt.sm}">
+      <q-scroll-area :style="`height: calc(${  FullHeight } - 100px); width:100%`"  :class="{'q-px-sm': $q.screen.gt.sm}">
         <q-card-section class="q-gutter-sm">
           <div class="row" :class="{'column reverse': $q.screen.lt.sm}">
             <q-card flat bordered>
@@ -222,6 +222,9 @@ export default {
     this.init()
   },
   computed: {
+    FullHeight () {
+      return window.innerHeight + 'px'
+    },
     ViaOptions () {
       return [
         'STP-TP', 'STP-BL', 'STP-SH', 'STP-BLI',
