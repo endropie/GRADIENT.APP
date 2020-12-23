@@ -47,7 +47,7 @@
               <q-item v-for="(row, index) in rsForm.receive_items" :key="index">
                 <q-item-section>
                     <q-input dense borderless readonly hide-bottom-space
-                      prefix="NO. SERIAL"
+                      :prefix="`${index+1}. NO SERIAL`"
                       input-class="bg-blue-grey text-white text-weight-medium q-pl-sm q-my-sm on-right"
                       v-model="row.serial"
                       v-validate="'required'"

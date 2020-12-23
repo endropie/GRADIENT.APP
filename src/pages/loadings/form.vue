@@ -80,7 +80,7 @@
                   </q-badge>
 
                   <q-input dense borderless readonly hide-bottom-space
-                    prefix="SERIAL"
+                    :prefix="`${index+1}. NO SERIAL`"
                     input-class="bg-blue-grey-2 text-weight-medium q-pl-sm q-my-sm on-right"
                     v-model="row.serial"
                     v-validate="'required'"
