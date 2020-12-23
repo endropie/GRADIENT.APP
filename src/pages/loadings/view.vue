@@ -1,12 +1,12 @@
 <template>
-  <q-dialog :ref="RECORD.dialog" persistent maximized>
+  <q-dialog :ref="DIALOG.name" persistent maximized>
     <q-card style="min-height: calc(100vh - 100px)" v-if="rsView">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
-        <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
+        <q-btn flat icon="arrow_back_ios" style="width:25px" @click="DIALOG.hide" />
         <q-toolbar-title>PENGELUARAN BARANG</q-toolbar-title>
         <!-- <q-space /> -->
       </q-bar>
-      <q-scroll-area style="height: calc(100vh - 100px); width:100%"  :class="{'q-px-sm': $q.screen.gt.sm}">
+      <q-scroll-area :style="`height: calc(${  FullHeight }  - 100px); width:100%`"  :class="{'q-px-sm': $q.screen.gt.sm}">
         <q-card-section>
           <div class="row q-mb-md">
             <div class="text-h6">Reference: {{rsView.reference}}</div>
@@ -55,7 +55,7 @@
       </q-scroll-area>
       <q-separator />
       <q-card-actions align="right" style="height:47px">
-        <q-btn label="Cancel" color="blue-grey-5" v-close-popup />
+        <q-btn label="Cancel" color="blue-grey-5" @click="DIALOG.hide" />
         <q-btn flat label="Delete" color="negative" @click="destroy()" />
       </q-card-actions>
     </q-card>
@@ -64,16 +64,19 @@
 
 <script>
 import MixRecord from '@/mixins/MixRecord'
+import MixDialog from '@/mixins/MixDialog'
 import ItemCard from '@/components/ItemCard'
 export default {
   name: 'ReceiveView',
-  mixins: [MixRecord],
+  mixins: [MixRecord, MixDialog],
   components: { ItemCard },
   data () {
     return {
       rsView: null,
+      DIALOG: {
+        name: 'dialog'
+      },
       RECORD: {
-        dialog: 'dialog',
         api: '/api/loadings',
         params: {
           fields: 'date,reference,reference.number',
@@ -86,6 +89,11 @@ export default {
   },
   created () {
     this.init()
+  },
+  computed: {
+    FullHeight () {
+      return window.innerHeight + 'px'
+    }
   },
   methods: {
     init () {

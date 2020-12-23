@@ -96,7 +96,7 @@ export default {
     form (row = null) {
       this.$q.dialog({
         component: FormComponent,
-        parent: this,
+        parent: this.$root,
         mode: 'create',
         id: null
       }).onOk(() => {
@@ -106,7 +106,7 @@ export default {
     view (row) {
       this.$q.dialog({
         component: ViewComponent,
-        parent: this,
+        parent: this.$root,
         mode: 'read',
         id: row.id
         // ...more.props...
@@ -115,5 +115,20 @@ export default {
       })
     }
   }
+  // beforeRouteLeave (to, from, next) {
+  //   console.warn('beforeRouteLeave', this)
+  //   next(false)
+  //   const globalDialogs = this.$children.filter(x => {
+  //     if (x.$options.name === 'QGlobalDialog') {
+  //       return x.$children.find(c => {
+  //         if (c.DIALOG && c.Dialog.name) {
+  //           c.DIALOG.hide()
+  //           return true
+  //         }
+  //       })
+  //     }
+  //   })
+  //   next(!globalDialogs.length)
+  // }
 }
 </script>

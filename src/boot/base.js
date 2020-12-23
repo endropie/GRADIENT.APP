@@ -21,10 +21,7 @@ export default ({ app, Vue }) => {
   const instanceApp = {
     env: process.env,
     config,
-    moment,
-    test: function () {
-      console.warn('ini APP tester', this)
-    }
+    moment
   }
 
   Vue.prototype.$app = instanceApp

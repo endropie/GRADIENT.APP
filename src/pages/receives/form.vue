@@ -1,8 +1,8 @@
 <template>
-  <q-dialog :ref="RECORD.dialog" persistent maximized>
+  <q-dialog :ref="DIALOG.name" persistent maximized>
     <q-card v-if="rsForm" style="min-width:250px">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
-        <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
+        <q-btn flat icon="arrow_back_ios" style="width:25px" @click="DIALOG.hide" />
         <q-toolbar-title>FORM PENERIMAAN BARANG</q-toolbar-title>
         <!-- <q-space /> -->
       </q-bar>
@@ -20,7 +20,7 @@
                 :error-message="errors.first('date')"
               />
               <q-space />
-              <q-input  type="text"
+              <q-input  type="text" autocomplete="off"
                 label="No. Referensi" stack-label
                 v-model="rsForm.reference_number"
                 v-validate=""
@@ -28,7 +28,7 @@
                 :error="errors.has('reference_number')"
                 :error-message="errors.first('reference_number')"
               />
-              <q-input type="text"
+              <q-input type="text" autocomplete="off"
                 label="Batch" stack-label
                 v-model="rsForm.reference_batch"
                 v-validate=""
@@ -199,7 +199,7 @@
       <q-separator />
       <q-card-actions align="right" class="items-end">
         <q-btn glossy color="grey" label="Reset" @click="reset()" />
-        <q-btn glossy color="positive" label="Save" @click="save()" />
+        <q-btn glossy color="positive" label="Save" @click="save()" :disable="!rsForm.receive_items.length" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -207,10 +207,11 @@
 
 <script>
 import mixRecord from '@/mixins/MixRecord'
+import MixDialog from '@/mixins/MixDialog'
 import CodeScanner from '@/components/CodeScanner'
 export default {
   name: 'ReceiveForm',
-  mixins: [mixRecord],
+  mixins: [mixRecord, MixDialog],
   data () {
     return {
       rsForm: null,
@@ -218,8 +219,13 @@ export default {
       SHEET: {
         items: { data: [], loading: false, api: '/api/items?mode=all' }
       },
+      DIALOG: {
+        name: 'dialog',
+        beforeHide: () => {
+          this.$q.notify('no-hide')
+        }
+      },
       RECORD: {
-        dialog: 'dialog',
         api: '/api/receives',
         params: {
           fields: 'id,date,reference',
@@ -334,6 +340,8 @@ export default {
           cancel: 'Batal'
         }).onOk(() => {
           submit()
+        }).onDismiss(() => {
+          this.$refs.code.focus()
         })
       })
     },

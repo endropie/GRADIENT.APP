@@ -1,8 +1,8 @@
 <template>
-  <q-dialog :ref="RECORD.dialog" persistent maximized>
+  <q-dialog :ref="DIALOG.name" persistent maximized>
     <q-card v-if="rsForm" style="min-width:250px">
       <q-bar class="bg-blue-grey text-white" style="height:47px">
-        <q-btn flat icon="arrow_back_ios" style="width:25px" v-close-popup />
+        <q-btn flat icon="arrow_back_ios" style="width:25px" @click="DIALOG.hide" />
         <q-toolbar-title>RECORD BARANG KELUAR</q-toolbar-title>
         <!-- <q-space /> -->
       </q-bar>
@@ -11,7 +11,7 @@
           <div class="row" :class="{'column reverse': $q.screen.lt.sm}">
             <q-card flat bordered>
               <q-card-section class="q-pa-sm">
-                <q-input class="fit"
+                <q-input class="fit" autocomplete="off"
                   label="REFERENSI" stack-label
                   data-vv-as="referensi"
                   v-model="rsForm.reference_number"
@@ -40,7 +40,8 @@
                     :error="errors.has('reference_date')"
                     :error-message="errors.first('reference_date')"
                   >
-                    <q-input slot="after" type="number" style="width:80px" class="no-padding"
+                    <q-input slot="after" type="number" autocomplete="off"
+                      style="width:80px" class="no-padding"
                       label="BATCH" stack-label
                       v-model="rsForm.reference_batch"
                       v-validate="'required'" no-error-icon
@@ -181,7 +182,7 @@
       <q-separator />
       <q-card-actions align="right" style="height:47px">
         <q-btn glossy color="grey" label="Reset" @click="reset" />
-        <q-btn glossy color="positive" label="Save" @click="save" />
+        <q-btn glossy color="positive" label="Save" @click="save" :disable="!rsForm.loading_items.length" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -189,10 +190,11 @@
 
 <script>
 import MixRecord from '@/mixins/MixRecord'
+import MixDialog from '@/mixins/MixDialog'
 import CodeScanner from '@/components/CodeScanner'
 export default {
   name: 'ReceiveForm',
-  mixins: [MixRecord],
+  mixins: [MixRecord, MixDialog],
   data () {
     return {
       rsForm: null,
@@ -333,6 +335,8 @@ export default {
           cancel: 'Batal'
         }).onOk(() => {
           submit()
+        }).onDismiss(() => {
+          this.$refs.code.focus()
         })
       })
     }

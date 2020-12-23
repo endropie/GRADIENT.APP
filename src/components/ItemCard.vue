@@ -41,7 +41,7 @@ export default {
   methods: {
     init () {
       if (!this.item) {
-        console.warn('GET', `${this.api}/${this.$props.id}`)
+        // console.warn('GET', `${this.api}/${this.$props.id}`)
         this.$axios.get(`${this.api}/${this.$props.id}`)
           .then((response) => {
             setTimeout(() => {

@@ -1,10 +1,11 @@
 <template>
-  <q-dialog ref="dialog" persistent maximized>
+  <q-dialog :ref="DIALOG.name" persistent maximized>
     <q-card>
       <q-bar class="bg-blue-grey text-white">
-        <q-btn dense flat icon="qr_code" @click="onDecode('1234567890')" v-if="$app.env.DEV" >
+        <q-icon name="qr_code" v-if="!$app.env.DEV" />
+        <q-icon v-else dense flat icon="qr_code" @click="onDecode('1234567890')" >
           <q-tooltip> TESTING </q-tooltip>
-        </q-btn>
+        </q-icon>
         <q-toolbar-title>CODE SCANING</q-toolbar-title>
         <q-space />
         <q-btn dense flat icon="close" v-close-popup>
@@ -19,18 +20,13 @@
 </template>
 
 <script>
+import MixDialog from '@/mixins/MixDialog'
 import { StreamBarcodeReader } from 'vue-barcode-reader'
-
 export default {
   name: 'CodeScanner',
+  mixins: [MixDialog],
   components: { StreamBarcodeReader },
   methods: {
-    show () {
-      this.$refs.dialog.show()
-    },
-    hide () {
-      this.$refs.dialog.hide()
-    },
     onDecode (v) {
       this.$emit('ok', v)
       this.hide()

@@ -1,8 +1,30 @@
 import storeModule from '@/store/module-realtime'
 
-export default ({ app, store, router }) => {
+export default ({ Vue, app, store, router }) => {
   // Register auth store
   store.registerModule('realtime', storeModule)
+
+  Vue.mixin({
+    beforeRouteLeave (to, from, next) {
+      const globalDialogs = this.$root.$children.filter(x => {
+        if (x.$options.name === 'QGlobalDialog') {
+          return x.$children.find(c => {
+            if (c.DIALOG && c.DIALOG.name) {
+              if (c.DIALOG.beforeHide === true) c.DIALOG.hide()
+              else if (typeof c.DIALOG.beforeHide === 'function') c.DIALOG.beforeHide()
+              else {
+                // ## no-action
+              }
+              // console.warn('FIX HIDE', c)
+              return true
+            }
+          })
+        }
+      })
+
+      next(!globalDialogs.length)
+    }
+  })
 
   const { routes } = router.options
   const routeData = routes.find(r => r.path === '/admin')

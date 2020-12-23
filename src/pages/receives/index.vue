@@ -94,7 +94,7 @@ export default {
     form (row = null) {
       this.$q.dialog({
         component: FormComponent,
-        parent: this,
+        parent: this.$root,
         mode: 'create',
         id: null
         // ...more.props...
@@ -105,7 +105,7 @@ export default {
     view (row) {
       this.$q.dialog({
         component: ViewComponent,
-        parent: this,
+        parent: this.$root,
         mode: 'read',
         id: row.id
         // ...more.props...
